@@ -9,7 +9,7 @@ This program solves transportation problems using linear programming techniques,
 To execute the program, open your terminal and run the following command:
 
 ```bash
-python -m app
+python -m tpp
 ```
 
 This command will start the application and prompt you for input to define the transportation problem to be solved.
