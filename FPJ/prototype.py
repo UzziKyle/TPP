@@ -79,7 +79,7 @@ def print_2d_array(data):
         array_2d[x][y] = value
 
     for row in array_2d:
-        print(row)
+        print(f'[ {", ".join("{:4}".format(value) for value in row)} ]')
         
 
 def numeric_to_letter(numeric_y):
