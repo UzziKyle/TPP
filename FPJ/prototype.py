@@ -89,6 +89,20 @@ def list_missing_coordinates(data):
     return [coord for coord, value in data.items() if value == 0]
 
 
+def compute_running_cost(data, costs):
+    total = 0
+    non_zero_data = {coord: value for coord, value in data.items() if value != 0}
+    for coord, value in non_zero_data.items():
+        x, y = coord
+        product = value * costs[x][y]
+        total += product
+        # print(f"{x+1}-{numeric_to_letter(y)}    {value} × {costs[x][y]}") # PRINT_SOLUTION
+    # print(f"costs = {total}")
+    return total
+
+
+
+
 def compute_for_improvement(coords, miscoords, costs):
     weight = {}
     for coord in miscoords:
@@ -108,7 +122,7 @@ def compute_for_improvement(coords, miscoords, costs):
         solution = solution[1:]
         solution = solution.replace('-', ' - ')
         solution = solution.replace('+', ' + ')
-        print(f"{coord[0]+1}-{numeric_to_letter(coord[1])}: {solution} = {total}")
+        # print(f"{coord[0]+1}-{numeric_to_letter(coord[1])}: {solution} = {total}") # PRINT_SOLUTION
         weight[coord] = total
     return weight
 
@@ -156,6 +170,14 @@ def optimize_table(loop, full_data):
         elif is_one(i):
             full_data[coord] -= transfer
     return full_data
+
+def print_shipments(data):
+    for coord, value in data.items():
+        print(f"Plant {coord[0] + 1} to Project {numeric_to_letter(coord[1])}    ->    {value} truckloads")
+
+def print_decision(data):
+    non_zero_data = {coord: value for coord, value in data.items() if value != 0}
+    print_shipments(non_zero_data)
 
 
 if __name__ == "__main__":
