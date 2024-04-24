@@ -93,14 +93,11 @@ def print_coordinate_val(data):
 
 
 def list_coordinates(data):
-    return [coord for coord, _ in data]
+    return [coord for coord, value in data.items() if value != 0]
 
 
 def list_missing_coordinates(data):
-    max_x = max(coord[0] for coord, _ in data)
-    max_y = max(coord[1] for coord, _ in data)
-    all_coordinates = [(x, y) for x in range(max_x + 1) for y in range(max_y + 1)]
-    return [coord for coord in all_coordinates if coord not in dict(data)]
+    return [coord for coord, value in data.items() if value == 0]
 
 
 def compute_for_improvement(coords, miscoords, costs):
@@ -205,30 +202,50 @@ if __name__ == "__main__":
     print_2d_array(full_data)
     print()
 
-    coords = list_coordinates(data)
-    miscoords = list_missing_coordinates(data)
-    print(f"coords: {coords}")
-    print(f"miscoords: {miscoords}")
-    print()
 
-    print('-- VACANT CELLS --')
-    improv = compute_for_improvement(coords, miscoords, costs)
-    print()
-    print(f"vac cells: {improv}")
-    print()
-
-    most_neg = get_most_negative(improv)
-    print(f"Most Negative: {most_neg}")
-    print()
-
-    most_nega_loop = get_loop(coords, most_neg)
-    print(f"loop: {most_nega_loop}")
-    print()
+    def try_optimizing(full_data, ):
+        coords = list_coordinates(full_data)
+        miscoords = list_missing_coordinates(full_data)
+        print(f"coords: {coords}")
+        print(f"miscoords: {miscoords}")
+        print()
 
 
-    optimized_tab = optimize_table(most_nega_loop, full_data)
-    print('--- OPTIMIZED TABLE ---')
-    print_2d_array(optimized_tab)
+        print('-- VACANT CELLS --')
+        improv = compute_for_improvement(coords, miscoords, costs)
+        print()
+        print(f"vac cells: {improv}")
+        print()
+
+
+        most_neg = get_most_negative(improv)
+        if most_neg is None:
+            print(" === FINAL ===")
+            return  print_2d_array(full_data)
+
+
+
+        print(f"Most Negative: {most_neg}")
+        print()
+
+        most_nega_loop = get_loop(coords, most_neg)
+        print(f"loop: {most_nega_loop}")
+        print()
+
+
+        optimized_data = optimize_table(most_nega_loop, full_data)
+        print(f"optimized_data: {optimized_data}")
+        print()
+        print('--- OPTIMIZED TABLE ---')
+        print_2d_array(optimized_data)
+        print()
+        print()
+        print()
+
+        try_optimizing(optimized_data)
+
+
+    try_optimizing(full_data)
 
 
 
