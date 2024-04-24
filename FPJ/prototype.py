@@ -1,9 +1,6 @@
 from os import system
 
 
-####################################################################
-#####################    H I S      C O D E    #####################
-####################################################################
 
 def north_west_corner(supply: list[int], demand: list[int]) -> list[tuple[tuple[int], int]]:
         supply_copy = supply.copy()
@@ -54,14 +51,6 @@ def get_loop(bv_positions, ev_position):
                 return new_loop
 
     return inner([ev_position])
-
-
-
-
-
-####################################################################
-######################    M Y      C O D E    ######################
-####################################################################
 
 
 def cls():
@@ -121,7 +110,6 @@ def compute_for_improvement(coords, miscoords, costs):
         solution = solution.replace('+', ' + ')
         print(f"{coord[0]+1}-{numeric_to_letter(coord[1])}: {solution} = {total}")
         weight[coord] = total
-
     return weight
 
 def print_dictionary(vac_cell):
@@ -136,6 +124,7 @@ def get_most_negative(vac_cell):
     else:
         return None
 
+
 def complete_data(data):
     max_x = max(coord[0] for coord, _ in data)
     max_y = max(coord[1] for coord, _ in data)
@@ -143,12 +132,15 @@ def complete_data(data):
     complete_data.update(dict(data))
     return complete_data
 
+
 def is_zero(num):
     return True if (num % 2 == 0) else False
+
 
 def is_one(num):
     return True if (num % 2 == 1) else False
         
+
 def optimize_table(loop, full_data):
     transfer = float('inf')
     for i in range(len(loop)):
@@ -163,89 +155,8 @@ def optimize_table(loop, full_data):
             full_data[coord] += transfer
         elif is_one(i):
             full_data[coord] -= transfer
-
     return full_data
 
 
-
-
-
-
-
 if __name__ == "__main__":
-    supply = [158, 184, 179]
-    demand = [174, 204, 143]
-    costs = [
-        [4, 8, 8],
-        [16, 24, 16],
-        [8, 16, 24]
-    ]
-  
-
-    cls()
-
-    print(f"supply: {supply}")
-    print(f"demand: {demand}")
-    print(f"costs: {costs}")
-
-
-    data = north_west_corner(supply=supply, demand=demand)
-    print(f"data: {data}")
-    print()
-
-    full_data = complete_data(data)
-    print(f"full_data: {full_data}")
-    print()
-
-    print_coordinate_val(data)
-    print()
-    print_2d_array(full_data)
-    print()
-
-
-    def try_optimizing(full_data, ):
-        coords = list_coordinates(full_data)
-        miscoords = list_missing_coordinates(full_data)
-        print(f"coords: {coords}")
-        print(f"miscoords: {miscoords}")
-        print()
-
-
-        print('-- VACANT CELLS --')
-        improv = compute_for_improvement(coords, miscoords, costs)
-        print()
-        print(f"vac cells: {improv}")
-        print()
-
-
-        most_neg = get_most_negative(improv)
-        if most_neg is None:
-            print(" === FINAL ===")
-            return  print_2d_array(full_data)
-
-
-
-        print(f"Most Negative: {most_neg}")
-        print()
-
-        most_nega_loop = get_loop(coords, most_neg)
-        print(f"loop: {most_nega_loop}")
-        print()
-
-
-        optimized_data = optimize_table(most_nega_loop, full_data)
-        print(f"optimized_data: {optimized_data}")
-        print()
-        print('--- OPTIMIZED TABLE ---')
-        print_2d_array(optimized_data)
-        print()
-        print()
-        print()
-
-        try_optimizing(optimized_data)
-
-
-    try_optimizing(full_data)
-
-
-
+    pass
