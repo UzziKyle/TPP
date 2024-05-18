@@ -7,6 +7,13 @@ from typing import List
 class Modi_Matrix:
     @staticmethod
     def get_data() -> Tuple[List[List[int]], List[int], List[int]]:
+        """
+        Getting user's input and checks if supply and demand are
+        balanced or not.
+
+        Returns:
+            Tuple[List[List[int]], List[int], List[int]]: generated costs, supply, and demand
+        """
         
         input_cost = input("Enter costs: ")
         sublists = input_cost.strip('[]').split("], [")
@@ -21,18 +28,36 @@ class Modi_Matrix:
     
     @staticmethod
     def get_result(cost: List[List[int]], supply: List[int], demand: List[int]) -> List[Dict]:
+        """
+        Gets cost, supply, and demand values to perform MODI transportation method
+
+        Args:
+            cost (List[List[int]]): cost values
+            supply (List[int]): supply values
+            demand (List[int]): demand values
+        Returns:
+            List[Dict]: summary of MODI transportation method tables
+        """
         result = Logics.transportation_simplex_method(Logics, supply=supply, demand=demand, costs=cost)
         return result
     
     
     def tabulate_result(supply: List[int], demand: List[int], result:List[Dict]) -> None:
+        """
+        Prints out a tabulated format of the result generated from MODI transportation process
+
+        Args:
+            supply (List[int]): supply values
+            demand (List[int]): demand values
+            result (List[Dict]): summary of MODI transportation method tables
+        """
         supply_header = [chr(96 + i + 1).upper() for i in range(len(demand))]
         for i in range(2):
             supply_header.insert(0, ' ')
             
         demand_row = [i + 1 for i in range(len(supply))]
-        supply_cf_header = [f'V{i + 1}' for i in range(len(supply_header))]
-        demand_cf_row = [f'W{i + 1}' for i in range(len(demand_row))]
+        supply_cf_header = [f'V{i + 1}' for i in range(len(supply))]
+        demand_cf_row = [f'W{i + 1}' for i in range(len(demand))]
         
         for i, row in enumerate(result):
             print(f"Table {i + 1}\n")
@@ -44,14 +69,14 @@ class Modi_Matrix:
             cur_table = row["solution"].copy()
             
             for i in range(len(cur_table)):
-                cur_table[i].insert(0, ws[i])  
+                cur_table[i].insert(0, vs[i])  
                 cur_table[i].insert(1, demand_row[i])
                 
             for i in range(2):
-                vs.insert(0, ' ')
+                ws.insert(0, ' ')
             
                 
-            cur_table.insert(0, vs)
+            cur_table.insert(0, ws)
             cur_table.insert(1, supply_header)
             
             
@@ -66,4 +91,6 @@ class Modi_Matrix:
             print(f"Entering variable: {entering_variable}\n")
             print(f"Close Loop: {close_loop}\n")
             print()
- 
+            
+if __name__ == "__main__":
+    pass

@@ -240,6 +240,19 @@ class Logics:
         return new_bfs
     
     def transportation_simplex_method(self, supply: List[int], demand: List[int], costs: List[List[int]], penalties=None) -> List[Dict]:
+        """
+        Performs simplex method to generate tables processed through 
+        MODI transportation method
+
+        Args:
+            supply (List[int]): supply values
+            demand (List[int]): demand values
+            costs (List[List[int]]): cost values
+            penalties (_type_, optional): penalty values. Defaults to None.
+
+        Returns:
+            List[Dict]: summary of MODI transportation method tables
+        """
         improvement = []
         balanced_supply, balanced_demand, balanced_costs = self.get_balanced_tp(
             supply, demand, costs
@@ -294,18 +307,4 @@ class Logics:
         return improvement
 
 if __name__ == "__main__":
-    supply = [100, 200, 300]
-    demand = [150, 90, 100]
-    costs = [
-        [5, 6, 7],
-        [8, 9, 10],
-        [1, 2, 3]
-    ]
-    new_supply, new_demand, new_costs = Logics.get_balanced_tp(supply=supply, demand=demand, costs=costs)
-    
-    initial_table = Logics.north_west_corner(new_supply, new_demand)
-    print(initial_table)
-    
-    table = Logics.transportation_simplex_method(Logics, new_supply, new_demand, new_costs)
-    for i in table:
-        print(i)
+    pass
