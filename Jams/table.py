@@ -15,7 +15,9 @@ class Modi_Matrix:
         supply = list(map(int, input("Enter supply: ").strip().split(',')))
         demand = list(map(int, input("Enter demand: ").strip().split(',')))
         
-        return cost, supply, demand
+        new_supply, new_demand, new_costs = Logics.get_balanced_tp(supply=supply, demand=demand, costs=cost)
+        
+        return new_costs, new_supply, new_demand
     
     @staticmethod
     def get_result(cost: List[List[int]], supply: List[int], demand: List[int]) -> List[Dict]:

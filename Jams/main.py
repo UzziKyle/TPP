@@ -6,6 +6,7 @@ class Application:
     def user_input() -> None:
         cost, supply, demand = Modi_Matrix.get_data()
         result = Modi_Matrix.get_result(cost=cost, supply=supply, demand=demand)
+        print(result)
         output = Modi_Matrix.tabulate_result(supply=supply, demand=demand, result=result)
         
     @staticmethod

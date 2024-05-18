@@ -22,14 +22,17 @@ class Logics:
         total_demand = sum(demand)
 
         if total_supply < total_demand:
-            if penalties is None:
-                raise Exception('Supply less than demand, penalties required')
             new_supply = supply + [total_demand - total_supply]
-            new_costs = costs + [penalties]
+            new_costs = costs + [[0 for _ in costs[0]]]
             return new_supply, demand, new_costs
         if total_supply > total_demand:
             new_demand = demand + [total_supply - total_demand]
-            new_costs = costs + [[0 for _ in demand]]
+            new_costs = []
+            
+            for row in costs:
+                row.append(0)
+                new_costs.append(row)
+                
             return supply, new_demand, new_costs
         return supply, demand, costs
 
@@ -290,3 +293,19 @@ class Logics:
 
         return improvement
 
+if __name__ == "__main__":
+    supply = [100, 200, 300]
+    demand = [150, 90, 100]
+    costs = [
+        [5, 6, 7],
+        [8, 9, 10],
+        [1, 2, 3]
+    ]
+    new_supply, new_demand, new_costs = Logics.get_balanced_tp(supply=supply, demand=demand, costs=costs)
+    
+    initial_table = Logics.north_west_corner(new_supply, new_demand)
+    print(initial_table)
+    
+    table = Logics.transportation_simplex_method(Logics, new_supply, new_demand, new_costs)
+    for i in table:
+        print(i)
